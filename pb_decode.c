@@ -29,8 +29,8 @@ static bool checkreturn decode_static_field(pb_istream_t *stream, pb_wire_type_t
 static bool checkreturn decode_pointer_field(pb_istream_t *stream, pb_wire_type_t wire_type, pb_field_iter_t *field);
 static bool checkreturn decode_callback_field(pb_istream_t *stream, pb_wire_type_t wire_type, pb_field_iter_t *field);
 static bool checkreturn decode_field(pb_istream_t *stream, pb_wire_type_t wire_type, pb_field_iter_t *field);
-static bool checkreturn default_extension_decoder(pb_istream_t *stream, pb_extension_t *extension, uint32_t tag, pb_wire_type_t wire_type);
-static bool checkreturn decode_extension(pb_istream_t *stream, uint32_t tag, pb_wire_type_t wire_type, pb_extension_t *extension);
+// static bool checkreturn default_extension_decoder(pb_istream_t *stream, pb_extension_t *extension, uint32_t tag, pb_wire_type_t wire_type);
+// static bool checkreturn decode_extension(pb_istream_t *stream, uint32_t tag, pb_wire_type_t wire_type, pb_extension_t *extension);
 static bool pb_field_set_to_default(pb_field_iter_t *field);
 static bool pb_message_set_to_defaults(pb_field_iter_t *iter);
 static bool checkreturn pb_dec_bool(pb_istream_t *stream, const pb_field_iter_t *field);
@@ -825,20 +825,20 @@ static bool checkreturn decode_field(pb_istream_t *stream, pb_wire_type_t wire_t
 /* Default handler for extension fields. Expects to have a pb_msgdesc_t
  * pointer in the extension->type->arg field, pointing to a message with
  * only one field in it.  */
-static bool checkreturn default_extension_decoder(pb_istream_t *stream,
-    pb_extension_t *extension, uint32_t tag, pb_wire_type_t wire_type)
-{
-    pb_field_iter_t iter;
+// static bool checkreturn default_extension_decoder(pb_istream_t *stream,
+//     pb_extension_t *extension, uint32_t tag, pb_wire_type_t wire_type)
+// {
+//     pb_field_iter_t iter;
 
-    if (!pb_field_iter_begin_extension(&iter, extension))
-        PB_RETURN_ERROR(stream, "invalid extension");
+//     if (!pb_field_iter_begin_extension(&iter, extension))
+//         PB_RETURN_ERROR(stream, "invalid extension");
 
-    if (iter.tag != tag || !iter.message)
-        return true;
+//     if (iter.tag != tag || !iter.message)
+//         return true;
 
-    extension->found = true;
-    return decode_field(stream, wire_type, &iter);
-}
+//     extension->found = true;
+//     return decode_field(stream, wire_type, &iter);
+// }
 
 /* Try to decode an unknown field as an extension field. Tries each extension
  * decoder in turn, until one of them handles the field or loop ends. */
