@@ -1000,7 +1000,7 @@ static bool checkreturn pb_decode_inner(pb_istream_t *stream, const pb_msgdesc_t
     pb_size_t fixed_count_total_size = 0;
 
     pb_fields_seen_t fields_seen = {{0, 0}};
-    const uint32_t allbits = ~(uint32_t)0;
+    // const uint32_t allbits = ~(uint32_t)0;
     pb_field_iter_t iter;
 
     if (pb_field_iter_begin(&iter, fields, dest_struct))
