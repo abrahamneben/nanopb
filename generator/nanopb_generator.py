@@ -1217,7 +1217,10 @@ class OneOf(Field):
             return '0, {' + self.fields[0].get_initializer(null_init) + '}'
 
     def tags(self):
-        return ''.join([f.tags() for f in self.fields])
+
+        identifier = Globals.naming_style.define_name('%s_%s_tag' % (self.struct_name, "_size_"))
+        size_tag = '#define %-40s %d\n' % (identifier, max([f.tag for f in self.fields]) + 1)
+        return ''.join([f.tags() for f in self.fields]) + size_tag
 
     def data_size(self, dependencies):
         return max(f.data_size(dependencies) for f in self.fields)

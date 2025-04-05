@@ -1,6 +1,8 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@rules_python//python:defs.bzl", "py_binary")
-load("@nanopb_pypi//:requirements.bzl", "requirement")
+load("@nanopb_pypi//:requirements.bzl", generic_requirement = "requirement")
+load("@nanopb_pypi_linux//:requirements.bzl", linux_requirement = "requirement")
+load("@nanopb_pypi_darwin//:requirements.bzl", darwin_requirement = "requirement")
 load("@rules_proto_grpc//:defs.bzl", "proto_plugin")
 load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
 load("//extra/bazel:nanopb_cc_proto_library.bzl", "cc_nanopb_proto_library")
@@ -25,6 +27,7 @@ cc_library(
         "pb_decode.h",
         "pb_encode.h",
     ],
+    copts = ["-Oz"],
     visibility = ["//visibility:public"],
 )
 
@@ -48,9 +51,11 @@ py_binary(
     imports = [
         "generator",
     ],
-    deps = [
-        requirement("grpcio-tools"),
-    ],
+    deps = select({
+        "@platforms//os:macos": [darwin_requirement("grpcio-tools")],
+        "@platforms//os:linux": [linux_requirement("grpcio-tools")],
+        "//conditions:default": [generic_requirement("grpcio-tools")],
+    }),
 )
 
 proto_plugin(
