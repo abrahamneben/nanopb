@@ -1038,36 +1038,36 @@ static bool checkreturn pb_decode_inner(pb_istream_t *stream, const pb_msgdesc_t
           }
         }
 
-        if (!pb_field_iter_find(&iter, tag) || PB_LTYPE(iter.type) == PB_LTYPE_EXTENSION)
+        if (!pb_field_iter_find(&iter, tag) )
         {
-            /* No match found, check if it matches an extension. */
-            if (extension_range_start == 0)
-            {
-                if (pb_field_iter_find_extension(&iter))
-                {
-                    extensions = *(pb_extension_t* const *)iter.pData;
-                    extension_range_start = iter.tag;
-                }
+            // /* No match found, check if it matches an extension. */
+            // if (extension_range_start == 0)
+            // {
+            //     if (pb_field_iter_find_extension(&iter))
+            //     {
+            //         extensions = *(pb_extension_t* const *)iter.pData;
+            //         extension_range_start = iter.tag;
+            //     }
 
-                if (!extensions)
-                {
-                    extension_range_start = (uint32_t)-1;
-                }
-            }
+            //     if (!extensions)
+            //     {
+            //         extension_range_start = (uint32_t)-1;
+            //     }
+            // }
 
-            if (tag >= extension_range_start)
-            {
-                size_t pos = stream->bytes_left;
+            // if (tag >= extension_range_start)
+            // {
+            //     size_t pos = stream->bytes_left;
 
-                if (!decode_extension(stream, tag, wire_type, extensions))
-                    return false;
+            //     if (!decode_extension(stream, tag, wire_type, extensions))
+            //         return false;
 
-                if (pos != stream->bytes_left)
-                {
-                    /* The field was handled */
-                    continue;
-                }
-            }
+            //     if (pos != stream->bytes_left)
+            //     {
+            //         /* The field was handled */
+            //         continue;
+            //     }
+            // }
 
             /* No match found, skip data */
             if (!pb_skip_field(stream, wire_type))
