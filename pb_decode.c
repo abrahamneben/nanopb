@@ -842,27 +842,27 @@ static bool checkreturn default_extension_decoder(pb_istream_t *stream,
 
 /* Try to decode an unknown field as an extension field. Tries each extension
  * decoder in turn, until one of them handles the field or loop ends. */
-static bool checkreturn decode_extension(pb_istream_t *stream,
-    uint32_t tag, pb_wire_type_t wire_type, pb_extension_t *extension)
-{
-    size_t pos = stream->bytes_left;
+// static bool checkreturn decode_extension(pb_istream_t *stream,
+//     uint32_t tag, pb_wire_type_t wire_type, pb_extension_t *extension)
+// {
+//     size_t pos = stream->bytes_left;
 
-    while (extension != NULL && pos == stream->bytes_left)
-    {
-        bool status;
-        if (extension->type->decode)
-            status = extension->type->decode(stream, extension, tag, wire_type);
-        else
-            status = default_extension_decoder(stream, extension, tag, wire_type);
+//     while (extension != NULL && pos == stream->bytes_left)
+//     {
+//         bool status;
+//         if (extension->type->decode)
+//             status = extension->type->decode(stream, extension, tag, wire_type);
+//         else
+//             status = default_extension_decoder(stream, extension, tag, wire_type);
 
-        if (!status)
-            return false;
+//         if (!status)
+//             return false;
 
-        extension = extension->next;
-    }
+//         extension = extension->next;
+//     }
 
-    return true;
-}
+//     return true;
+// }
 
 /* Initialize message fields to default values, recursively */
 static bool pb_field_set_to_default(pb_field_iter_t *field)
@@ -988,8 +988,8 @@ static bool pb_message_set_to_defaults(pb_field_iter_t *iter)
 
 static bool checkreturn pb_decode_inner(pb_istream_t *stream, const pb_msgdesc_t *fields, void *dest_struct, unsigned int flags)
 {
-    uint32_t extension_range_start = 0;
-    pb_extension_t *extensions = NULL;
+//     uint32_t extension_range_start = 0;
+    // pb_extension_t *extensions = NULL;
 
     /* 'fixed_count_field' and 'fixed_count_size' track position of a repeated fixed
      * count field. This can only handle _one_ repeated fixed count field that
