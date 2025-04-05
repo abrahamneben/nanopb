@@ -27,7 +27,7 @@ cc_library(
         "pb_decode.h",
         "pb_encode.h",
     ],
-    copts = ["-Oz"],
+    copts = ["-O2"],
     visibility = ["//visibility:public"],
 )
 
